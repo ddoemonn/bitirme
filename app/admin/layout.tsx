@@ -5,7 +5,8 @@ import {
   Car, 
   Calendar, 
   Users, 
-  Settings 
+  Settings,
+  FileBarChart,
 } from 'lucide-react'
 
 async function getUser() {
@@ -18,6 +19,7 @@ const navItems = [
   { href: "/admin/bookings", label: "Kiralamalar", icon: Calendar },
   { href: "/admin/customers", label: "Müşteriler", icon: Users },
   { href: "/admin/settings", label: "Ayarlar", icon: Settings },
+  { href: "/admin/reports", label: "Raportlar", icon: FileBarChart}
 ]
 
 export default async function AdminLayout({
