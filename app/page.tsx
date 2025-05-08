@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, CheckCircle2, Shield, Clock, MapPin, Phone } from "lucide-react"
+import { ArrowRight, CheckCircle2, Shield, Clock, MapPin, Phone, UserPlus } from "lucide-react"
 
 export default function HomePage() {
   return (
@@ -27,13 +27,18 @@ export default function HomePage() {
               Lüks ve konfor arayanlar için özel seçilmiş araç filomuzla, 
               her yolculuğunuzu unutulmaz kılıyoruz.
             </p>
-            <div className="mt-10 flex gap-4">
+            <div className="mt-10 flex flex-wrap gap-4">
               <Button size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-black">
                 Hemen Rezervasyon Yap <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button size="lg" variant="outline" className="text-black" asChild>
+              <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10" asChild>
+                <Link href="/register">
+                  <UserPlus className="mr-2 h-5 w-5" /> Üye Ol
+                </Link>
+              </Button>
+              <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10" asChild>
                 <Link href="/login">
-                  Yönetim Paneli
+                  Giriş Yap
                 </Link>
               </Button>
             </div>

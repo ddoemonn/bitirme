@@ -1,36 +1,45 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
-import { Car } from 'lucide-react'
+import { Car, UserPlus, LogIn, CheckCircle } from 'lucide-react'
+import { authService } from '@/lib/api'
 
 export default function LoginPage() {
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
+
+  // Check if user just registered
+  useEffect(() => {
+    const registered = searchParams.get('registered')
+    if (registered === 'true') {
+      setSuccessMessage('Kaydınız başarıyla oluşturuldu! Şimdi giriş yapabilirsiniz.')
+    }
+  }, [searchParams])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError(null)
+    setSuccessMessage(null)
 
-    // For demo purposes, we're using a hardcoded check
-    // In a real app, you'd verify credentials with a backend
-    if (username === 'admin' && password === 'password') {
-      // Simulate backend delay
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      // Set login status in localStorage
-      localStorage.setItem('isLoggedIn', 'true')
+    try {
+      await authService.login(email, password)
       router.push('/admin')
-    } else {
-      setError('Geçersiz kullanıcı adı veya şifre')
+    } catch (error) {
+      setError('Geçersiz e-posta veya şifre')
+      console.error('Login error:', error)
+    } finally {
       setIsLoading(false)
     }
   }
@@ -50,7 +59,7 @@ export default function LoginPage() {
           <CardHeader>
             <CardTitle>Giriş Yap</CardTitle>
             <CardDescription>
-              Yönetici bilgilerinizle giriş yaparak sistemi yönetin
+              Hesap bilgilerinizle giriş yaparak sistemi kullanın
             </CardDescription>
           </CardHeader>
           <form onSubmit={handleSubmit}>
@@ -60,13 +69,22 @@ export default function LoginPage() {
                   {error}
                 </div>
               )}
+              
+              {successMessage && (
+                <div className="p-3 rounded-md bg-green-50 text-green-600 text-sm flex items-start">
+                  <CheckCircle className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" />
+                  <span>{successMessage}</span>
+                </div>
+              )}
+              
               <div className="space-y-2">
-                <Label htmlFor="username">Kullanıcı Adı</Label>
+                <Label htmlFor="email">E-posta</Label>
                 <Input 
-                  id="username"
-                  placeholder="admin" 
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  id="email"
+                  type="email"
+                  placeholder="ornek@mail.com" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </div>
@@ -88,11 +106,28 @@ export default function LoginPage() {
                 className="w-full" 
                 disabled={isLoading}
               >
-                {isLoading ? 'Giriş Yapılıyor...' : 'Giriş Yap'}
+                {isLoading ? (
+                  <span className="flex items-center">
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Giriş Yapılıyor...
+                  </span>
+                ) : (
+                  <span className="flex items-center">
+                    <LogIn className="mr-2 h-4 w-4" />
+                    Giriş Yap
+                  </span>
+                )}
               </Button>
-              <div className="mt-4 text-center text-sm">
-                <Link href="/" className="text-blue-500 hover:text-blue-700">
+              
+              <div className="mt-4 text-center text-sm flex justify-between items-center w-full">
+                <Link href="/" className="text-gray-600 hover:text-gray-800">
                   Ana sayfaya dön
+                </Link>
+                <Link href="/register" className="text-yellow-600 font-semibold hover:underline flex items-center">
+                  <UserPlus className="mr-1 h-4 w-4" /> Yeni Hesap Oluştur
                 </Link>
               </div>
             </CardFooter>
