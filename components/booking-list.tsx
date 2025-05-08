@@ -88,7 +88,7 @@ export function BookingList() {
                     <DropdownMenuItem
                       onClick={() => navigator.clipboard.writeText(booking.id.toString())}
                     >
-                      Kiralama ID'sini Kopyala
+                      Kiralama ID&apos;sini Kopyala
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>

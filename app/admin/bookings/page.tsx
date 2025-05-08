@@ -5,15 +5,15 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose
+} from "@/components/ui/dialog"
 import { 
   Plus, 
   Search, 
@@ -52,7 +52,7 @@ const initialBookings: BookingType[] = [
 ]
 
 export default function BookingsPage() {
-  const [bookings, setBookings] = useState<BookingType[]>(initialBookings)
+  const [bookings] = useState<BookingType[]>(initialBookings)
   const [isOpen, setIsOpen] = useState(false)
 
   const getStatusBadge = (status: BookingType["status"]) => {
@@ -85,43 +85,56 @@ export default function BookingsPage() {
           <p className="text-gray-500 mt-2">Tüm kiralama işlemlerini buradan yönetin</p>
         </div>
         <div className="flex items-center gap-3">
-          <Drawer open={isOpen} onOpenChange={setIsOpen} direction="right">
-            <DrawerTrigger asChild>
+          <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogTrigger asChild>
               <Button>
                 <Plus className="mr-2 h-4 w-4" /> Yeni Kiralama
               </Button>
-            </DrawerTrigger>
-            <DrawerContent direction="right">
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[600px]">
               <form onSubmit={(e) => e.preventDefault()}>
-                <DrawerHeader>
-                  <DrawerTitle>Yeni Kiralama Oluştur</DrawerTitle>
-                  <DrawerDescription>
+                <DialogHeader>
+                  <DialogTitle>Yeni Kiralama Oluştur</DialogTitle>
+                  <DialogDescription>
                     Kiralama bilgilerini girerek yeni bir kayıt oluşturun
-                  </DrawerDescription>
-                </DrawerHeader>
-                <div className="p-4 space-y-4">
-                  <Input placeholder="Müşteri Adı" required />
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="space-y-4 py-4">
+                  <select className="w-full rounded-md border p-2">
+                    <option value="">Müşteri Seçin</option>
+                    <option>Ahmet Yılmaz</option>
+                    <option>Ayşe Demir</option>
+                    <option>Mehmet Kaya</option>
+                    <option>Zeynep Çelik</option>
+                    <option>Ali Öztürk</option>
+                  </select>
                   <select className="w-full rounded-md border p-2">
                     <option value="">Araç Seçin</option>
-                    <option>BMW X5</option>
-                    <option>Mercedes C200</option>
-                    <option>Audi A6</option>
+                    <option>BMW X5 - Siyah - 34 ABC 123</option>
+                    <option>Mercedes C200 - Gri - 34 XYZ 789</option>
+                    <option>Audi A6 - Beyaz - 34 DEF 456</option>
+                    <option>Volkswagen Passat - Mavi - 34 GHI 789</option>
+                    <option>Toyota Corolla - Kırmızı - 34 JKL 012</option>
                   </select>
                   <div className="grid grid-cols-2 gap-4">
                     <Input type="date" placeholder="Başlangıç Tarihi" required />
                     <Input type="date" placeholder="Bitiş Tarihi" required />
                   </div>
-                  <Input placeholder="Günlük Ücret" type="number" required />
+                  <Input placeholder="Kiralama Ücreti" type="number" required />
+                  <textarea 
+                    placeholder="Notlar" 
+                    className="w-full rounded-md border min-h-[100px] p-2 resize-none"
+                  ></textarea>
                 </div>
-                <DrawerFooter>
+                <DialogFooter>
                   <Button type="submit">Kaydet</Button>
-                  <DrawerClose asChild>
+                  <DialogClose asChild>
                     <Button variant="outline" type="button">İptal</Button>
-                  </DrawerClose>
-                </DrawerFooter>
+                  </DialogClose>
+                </DialogFooter>
               </form>
-            </DrawerContent>
-          </Drawer>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 

@@ -3,18 +3,12 @@ import { Overview } from '@/components/overview'
 import { RecentBookings } from '@/components/recent-bookings'
 import { CarStats } from '@/components/car-stats'
 import { Button } from '@/components/ui/button'
-import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
-import { Input } from '@/components/ui/input'
 import { 
   TrendingUp, 
   Users, 
   Car, 
   Calendar,
-  Plus,
-  Search,
-  Filter,
   ArrowUpRight,
-  Bell
 } from 'lucide-react'
 
 export default function AdminDashboard() {
@@ -25,34 +19,6 @@ export default function AdminDashboard() {
           <h1 className="text-3xl font-bold tracking-tight">Kontrol Paneli</h1>
           <p className="text-gray-500 mt-2">Hoş geldiniz, tüm istatistikleri buradan takip edebilirsiniz.</p>
         </div>
-        <div className="flex items-center gap-3">
-          <Button size="icon" variant="outline">
-            <Bell className="h-5 w-5" />
-          </Button>
-          <Drawer>
-            <DrawerTrigger asChild>
-              <Button>
-                <Plus className="mr-2 h-4 w-4" /> Yeni Kiralama
-              </Button>
-            </DrawerTrigger>
-            <DrawerContent>
-              <div className="p-6">
-                <h2 className="text-2xl font-bold mb-6">Yeni Kiralama Oluştur</h2>
-                {/* Form content */}
-              </div>
-            </DrawerContent>
-          </Drawer>
-        </div>
-      </div>
-
-      <div className="flex flex-col sm:flex-row gap-4">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
-          <Input className="pl-10" placeholder="Araç, müşteri veya rezervasyon ara..." />
-        </div>
-        <Button variant="outline" className="shrink-0">
-          <Filter className="mr-2 h-4 w-4" /> Filtrele
-        </Button>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">

@@ -1,4 +1,7 @@
-import { redirect } from 'next/navigation'
+'use client'
+
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { 
   LayoutDashboard, 
@@ -7,11 +10,9 @@ import {
   Users, 
   Settings,
   FileBarChart,
+  LogOut
 } from 'lucide-react'
-
-async function getUser() {
-  return { role: 'admin' }
-}
+import { Button } from '@/components/ui/button'
 
 const navItems = [
   { href: "/admin", label: "Kontrol Paneli", icon: LayoutDashboard },
@@ -22,15 +23,37 @@ const navItems = [
   { href: "/admin/reports", label: "Raportlar", icon: FileBarChart}
 ]
 
-export default async function AdminLayout({
+export default function AdminLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const user = await getUser()
-  
-  if (user.role !== 'admin') {
-    redirect('/')
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    // Check if user is logged in
+    // In a real app, this would verify a token or session
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'
+    
+    if (!isLoggedIn) {
+      router.push('/login')
+    } else {
+      setIsLoading(false)
+    }
+  }, [router])
+
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn')
+    router.push('/login')
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin h-12 w-12 border-4 border-yellow-500 rounded-full border-t-transparent"></div>
+      </div>
+    )
   }
 
   return (
@@ -53,6 +76,15 @@ export default async function AdminLayout({
           </div>
           <div className="flex items-center gap-4">
             <span className="text-sm text-gray-500">Yönetici</span>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={handleLogout}
+              className="text-gray-500 hover:text-gray-900"
+            >
+              <LogOut className="h-4 w-4 mr-2" />
+              Çıkış Yap
+            </Button>
           </div>
         </div>
       </div>

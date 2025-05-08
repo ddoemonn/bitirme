@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { Switch } from "@/components/ui/switch"
 import { toast } from "@/hooks/use-toast"
 
 
@@ -32,6 +33,9 @@ const generalSettingsSchema = z.object({
   address: z.string().min(10, {
     message: "Adres en az 10 karakter olmalıdır.",
   }),
+  description: z.string().optional(),
+  workingHours: z.string().optional(),
+  isShopOpen: z.boolean().default(true),
 })
 
 export function GeneralSettings() {
@@ -42,6 +46,9 @@ export function GeneralSettings() {
       contactEmail: "",
       contactPhone: "",
       address: "",
+      description: "",
+      workingHours: "",
+      isShopOpen: true,
     },
   })
 
@@ -58,6 +65,31 @@ export function GeneralSettings() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
+          name="isShopOpen"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+              <div className="space-y-0.5">
+                <FormLabel className="text-base">Dükkan Durumu</FormLabel>
+                <FormDescription>
+                  Dükkanınızı açık veya kapalı olarak işaretleyin. Kapalı olarak işaretlenmesi durumunda web sayfanızda bir bildirim gösterilecektir.
+                </FormDescription>
+              </div>
+              <FormControl>
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm font-medium text-gray-500">
+                    {field.value ? "Açık" : "Kapalı"}
+                  </span>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </div>
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="companyName"
           render={({ field }) => (
             <FormItem>
@@ -67,6 +99,42 @@ export function GeneralSettings() {
               </FormControl>
               <FormDescription>
                 Bu, müşterilere gösterilecek resmi şirket adınızdır.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Açıklama</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Şirketiniz hakkında kısa bir açıklama"
+                  className="resize-none min-h-[100px]"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription>
+                Bu açıklama web sitenizde ve müşteri iletişimlerinde kullanılabilir.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="workingHours"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Çalışma Saatleri</FormLabel>
+              <FormControl>
+                <Input placeholder="Örn: Pazartesi-Cuma: 09:00-18:00, Cumartesi: 10:00-14:00" {...field} />
+              </FormControl>
+              <FormDescription>
+                İşletmenizin çalışma saatlerini belirtin.
               </FormDescription>
               <FormMessage />
             </FormItem>

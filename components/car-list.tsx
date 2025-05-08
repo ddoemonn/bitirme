@@ -72,7 +72,7 @@ export function CarList() {
                     <DropdownMenuItem
                       onClick={() => navigator.clipboard.writeText(car.id.toString())}
                     >
-                      Araç ID'sini Kopyala
+                      Araç ID&apos;sini Kopyala
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>

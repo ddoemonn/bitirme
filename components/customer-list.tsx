@@ -68,7 +68,7 @@ export function CustomerList() {
                     <DropdownMenuItem
                       onClick={() => navigator.clipboard.writeText(customer.id.toString())}
                     >
-                      Müşteri ID'sini Kopyala
+                      Müşteri ID&apos;sini Kopyala
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowRight, CheckCircle2, Shield, Clock, MapPin, Phone } from "lucide-react"
 
 export default function HomePage() {
@@ -31,7 +32,7 @@ export default function HomePage() {
                 Hemen Rezervasyon Yap <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               <Button size="lg" variant="outline" className="text-black" asChild>
-                <Link href="/admin">
+                <Link href="/login">
                   Yönetim Paneli
                 </Link>
               </Button>
@@ -116,10 +117,12 @@ export default function HomePage() {
             ].map((car, index) => (
               <div key={index} className="group bg-white rounded-2xl overflow-hidden border hover:shadow-lg transition-all">
                 <div className="aspect-video overflow-hidden">
-                  <img 
+                  <Image 
                     src={car.image} 
                     alt={car.name}
                     className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                    width={800}
+                    height={450}
                   />
                 </div>
                 <div className="p-6">
@@ -153,6 +156,15 @@ export default function HomePage() {
                 <div className="flex items-center gap-4">
                   <Phone className="w-6 h-6 text-yellow-500" />
                   <span>+90 (555) 123 45 67</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <Clock className="w-6 h-6 text-yellow-500" />
+                  <div>
+                    <span className="block">Çalışma Saatleri</span>
+                    <span className="text-sm text-gray-500">Hafta içi: 09:00 - 18:00</span>
+                    <span className="block text-sm text-gray-500">Cumartesi: 10:00 - 14:00</span>
+                    <span className="block text-sm text-gray-500">Pazar: Kapalı</span>
+                  </div>
                 </div>
               </div>
               <div className="mt-8">

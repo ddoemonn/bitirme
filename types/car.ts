@@ -10,3 +10,13 @@ export interface Car {
   mileage: string;
 }
 
+export interface CarData {
+  id: number;
+  brand: string;
+  model: string;
+  year: number;
+  plate: string;
+  status: string;
+  category: string;
+}
+

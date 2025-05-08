@@ -1,4 +1,4 @@
-import { MapPin, Clock, Phone, Calendar } from 'lucide-react'
+import { MapPin, Clock, Phone } from 'lucide-react'
 
 export function ShopInfo() {
   return (

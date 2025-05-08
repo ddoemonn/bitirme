@@ -3,7 +3,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { GeneralSettings } from "@/components/general-settings"
-import { NotificationSettings } from "@/components/notification-settings"
 import { SecuritySettings } from "@/components/security-settings"
 
 export default function SettingsPage() {
@@ -17,7 +16,6 @@ export default function SettingsPage() {
       <Tabs defaultValue="general" className="space-y-6">
         <TabsList>
           <TabsTrigger value="general">Genel</TabsTrigger>
-          <TabsTrigger value="notifications">Bildirimler</TabsTrigger>
           <TabsTrigger value="security">Güvenlik</TabsTrigger>
         </TabsList>
 
@@ -28,17 +26,6 @@ export default function SettingsPage() {
             </CardHeader>
             <CardContent>
               <GeneralSettings />
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="notifications" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Bildirim Ayarları</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <NotificationSettings />
             </CardContent>
           </Card>
         </TabsContent>

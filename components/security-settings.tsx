@@ -14,7 +14,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Switch } from "@/components/ui/switch"
 import { toast } from "@/hooks/use-toast"
 
 const securitySettingsSchema = z.object({
@@ -27,7 +26,6 @@ const securitySettingsSchema = z.object({
   confirmNewPassword: z.string().min(8, {
     message: "Şifre en az 8 karakter olmalıdır.",
   }),
-  twoFactorAuth: z.boolean(),
 }).refine((data) => data.newPassword === data.confirmNewPassword, {
   message: "Şifreler eşleşmiyor",
   path: ["confirmNewPassword"],
@@ -40,7 +38,6 @@ export function SecuritySettings() {
       currentPassword: "",
       newPassword: "",
       confirmNewPassword: "",
-      twoFactorAuth: false,
     },
   })
 
@@ -100,26 +97,6 @@ export function SecuritySettings() {
                 Yeni şifrenizi tekrar girin.
               </FormDescription>
               <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="twoFactorAuth"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-              <div className="space-y-0.5">
-                <FormLabel className="text-base">İki Faktörlü Kimlik Doğrulama</FormLabel>
-                <FormDescription>
-                  Hesabınızı daha güvenli hale getirmek için iki faktörlü kimlik doğrulamayı etkinleştirin.
-                </FormDescription>
-              </div>
-              <FormControl>
-                <Switch
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
             </FormItem>
           )}
         />

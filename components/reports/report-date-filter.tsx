@@ -45,7 +45,7 @@ export function ReportDateFilter() {
       setEndDate(today)
     }
 
-    setDateRange(value as any)
+    setDateRange(value as "1m" | "3m" | "6m" | "1y" | "custom")
   }
 
   const applyFilter = () => {

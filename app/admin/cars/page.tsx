@@ -5,15 +5,15 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose
+} from "@/components/ui/dialog"
 import { 
   Plus, 
   Search, 
@@ -24,6 +24,7 @@ import {
   Check,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 interface CarType {
   id: number
@@ -110,21 +111,21 @@ export default function CarsPage() {
           <p className="text-gray-500 mt-2">Araç filonuzu buradan yönetin</p>
         </div>
         <div className="flex items-center gap-3">
-          <Drawer open={isOpen} onOpenChange={setIsOpen} direction="right">
-            <DrawerTrigger asChild>
+          <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogTrigger asChild>
               <Button>
                 <Plus className="mr-2 h-4 w-4" /> Yeni Araç Ekle
               </Button>
-            </DrawerTrigger>
-            <DrawerContent direction="right">
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[600px]">
               <form onSubmit={handleSubmit}>
-                <DrawerHeader>
-                  <DrawerTitle>Yeni Araç Ekle</DrawerTitle>
-                  <DrawerDescription>
+                <DialogHeader>
+                  <DialogTitle>Yeni Araç Ekle</DialogTitle>
+                  <DialogDescription>
                     Araç bilgilerini girerek filonuza yeni bir araç ekleyin
-                  </DrawerDescription>
-                </DrawerHeader>
-                <div className="p-4 space-y-4">
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="space-y-4 py-4">
                   <Input
                     name="name"
                     placeholder="Araç Markası ve Modeli"
@@ -189,15 +190,15 @@ export default function CarsPage() {
                     onChange={handleInputChange}
                   />
                 </div>
-                <DrawerFooter>
+                <DialogFooter>
                   <Button type="submit">Kaydet</Button>
-                  <DrawerClose asChild>
+                  <DialogClose asChild>
                     <Button variant="outline" type="button">İptal</Button>
-                  </DrawerClose>
-                </DrawerFooter>
+                  </DialogClose>
+                </DialogFooter>
               </form>
-            </DrawerContent>
-          </Drawer>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 
@@ -248,10 +249,12 @@ export default function CarsPage() {
         {cars.map((car) => (
           <Card key={car.id} className="overflow-hidden">
             <div className="aspect-video w-full overflow-hidden">
-              <img 
+              <Image 
                 src={car.image} 
                 alt={car.name}
                 className="h-full w-full object-cover transition-transform hover:scale-105"
+                width={800}
+                height={450}
               />
             </div>
             <CardContent className="p-4">

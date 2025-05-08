@@ -5,15 +5,15 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose
+} from "@/components/ui/dialog"
 import { 
   Plus, 
   Search, 
@@ -53,7 +53,7 @@ const initialCustomers: CustomerType[] = [
 ]
 
 export default function CustomersPage() {
-  const [customers, setCustomers] = useState<CustomerType[]>(initialCustomers)
+  const [customers] = useState<CustomerType[]>(initialCustomers)
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -64,37 +64,40 @@ export default function CustomersPage() {
           <p className="text-gray-500 mt-2">Müşteri bilgilerini buradan yönetin</p>
         </div>
         <div className="flex items-center gap-3">
-          <Drawer open={isOpen} onOpenChange={setIsOpen} direction="right">
-            <DrawerTrigger asChild>
+          <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogTrigger asChild>
               <Button>
                 <Plus className="mr-2 h-4 w-4" /> Yeni Müşteri
               </Button>
-            </DrawerTrigger>
-            <DrawerContent direction="right">
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[600px]">
               <form onSubmit={(e) => e.preventDefault()}>
-                <DrawerHeader>
-                  <DrawerTitle>Yeni Müşteri Ekle</DrawerTitle>
-                  <DrawerDescription>
+                <DialogHeader>
+                  <DialogTitle>Yeni Müşteri Ekle</DialogTitle>
+                  <DialogDescription>
                     Müşteri bilgilerini girerek yeni kayıt oluşturun
-                  </DrawerDescription>
-                </DrawerHeader>
-                <div className="p-4 space-y-4">
-                  <Input placeholder="Ad Soyad" required />
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="space-y-4 py-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <Input placeholder="Adı" required />
+                    <Input placeholder="Soyadı" required />
+                  </div>
                   <Input type="email" placeholder="E-posta" required />
                   <Input placeholder="Telefon" required />
                   <Input placeholder="Adres" required />
                   <Input placeholder="TC Kimlik No" required />
                   <Input placeholder="Ehliyet No" required />
                 </div>
-                <DrawerFooter>
+                <DialogFooter>
                   <Button type="submit">Kaydet</Button>
-                  <DrawerClose asChild>
+                  <DialogClose asChild>
                     <Button variant="outline" type="button">İptal</Button>
-                  </DrawerClose>
-                </DrawerFooter>
+                  </DialogClose>
+                </DialogFooter>
               </form>
-            </DrawerContent>
-          </Drawer>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 
